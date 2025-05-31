@@ -161,6 +161,8 @@ const Session = {
     // Show completion screen
     UI.showCompletionScreen(this.sessionData);
 
+    const reportElem = document.getElementById("summary-report");
+    reportElem.innerHTML = "Generating report...";
     const data = await JSON.parse(localStorage.getItem("voiceQA_session"));
     const { qa } = data;
     const response = await fetch("http://localhost:3000/get-response", {
@@ -178,6 +180,6 @@ const Session = {
     });
     const report = await response.json();
     const html = marked.parse(report.response);
-    document.getElementById("summary-report").innerHTML = html;
+    reportElem.innerHTML = html;
   },
 };
