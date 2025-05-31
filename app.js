@@ -2,8 +2,8 @@ import express from "express";
 import cors from "cors";
 import OpenAI from "openai";
 import "dotenv/config";
-import path from "path"
-import { fileURLToPath } from 'url';
+import path from "path";
+import { fileURLToPath } from "url";
 const app = express();
 
 app.use(cors({ origin: "*" }));
@@ -47,6 +47,6 @@ app.post("/get-response", async (req, res) => {
     .status(200);
 });
 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT | 3000, () => {
   console.log("app is listening on port", process.env.PORT);
 });
