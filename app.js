@@ -4,6 +4,7 @@ import OpenAI from "openai";
 import "dotenv/config";
 import path from "path";
 import { fileURLToPath } from "url";
+
 const app = express();
 
 app.use(cors({ origin: "*" }));
@@ -14,17 +15,32 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY, // This is the default and can be omitted
+  apiKey: process.env.OPENAI_API_KEY,
 });
 
 const getResponseFromOpenAi = async (query) => {
-  const response = await client.responses.create({
-    model: "gpt-4o",
-    instructions: "you are an HR recruiting bot.",
-    input: query,
-  });
+  try {
+    const response = await client.chat.completions.create({
+      model: "gpt-4o",
+      messages: [
+        {
+          role: "system",
+          content: "You are an HR recruiting bot."
+        },
+        {
+          role: "user",
+          content: query
+        }
+      ],
+      max_tokens: 500,
+      temperature: 0.7
+    });
 
-  return response.output_text;
+    return response.choices[0].message.content;
+  } catch (error) {
+    console.error("OpenAI API Error:", error);
+    throw new Error("Failed to get response from OpenAI");
+  }
 };
 
 // Serve static files (like index.html, CSS, JS)
@@ -36,17 +52,28 @@ app.get("/", (req, res) => {
 });
 
 app.post("/get-response", async (req, res) => {
-  const { query } = await req.body;
-  console.log(query);
-  const response = await getResponseFromOpenAi(query);
-  console.log(response);
-  return res
-    .json({
+  try {
+    const { query } = req.body;
+    
+    if (!query) {
+      return res.status(400).json({ error: "Query is required" });
+    }
+    
+    console.log("Query:", query);
+    const response = await getResponseFromOpenAi(query);
+    console.log("Response:", response);
+    
+    return res.status(200).json({
       response,
-    })
-    .status(200);
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
 });
 
-app.listen(process.env.PORT | 3000, () => {
-  console.log("app is listening on port", process.env.PORT);
+// Fixed port configuration - use || instead of |
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log("App is listening on port", PORT);
 });
