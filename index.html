@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HR Recruitment</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/login.css">
+  <link rel="stylesheet" href="css/chat.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+  <!-- Login Screen -->
+  <div id="login-screen" class="screen active">
+    <div class="login-container">
+      <h1>HR Recruitment</h1>
+      <p class="subtitle">Please sign in with your Gmail address to continue</p>
+      
+      <form id="login-form">
+        <div class="input-group">
+          <input type="email" id="email-input" placeholder="Enter your Gmail address" required>
+          <br>
+          <input type="text" id="email-input" placeholder="Enter what difficulty you want." required>
+          <div id="email-error" class="error-message"></div>
+        </div>
+        <button type="submit" id="login-button">Start Session</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Chat Screen -->
+  <div id="chat-screen" class="screen">
+    <div class="chat-header">
+      <div class="user-info">
+        <span id="user-email"></span>
+      </div>
+      <div class="timer-container">
+        <div class="session-timer">
+          <span class="timer-label">Session:</span>
+          <span id="session-timer">60:00</span>
+        </div>
+        <div class="question-timer">
+          <span class="timer-label">Question:</span>
+          <span id="question-timer">02:00</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="chat-messages" id="chat-messages">
+      <!-- Messages will be inserted here by JavaScript -->
+    </div>
+    
+    <div class="chat-controls">
+      <div id="recording-indicator">
+        <div class="recording-pulse"></div>
+        <span>Recording...</span>
+      </div>
+      <button id="stop-recording" class="control-button">Stop Recording</button>
+    </div>
+    
+    <div id="error-container" class="error-container">
+      <div id="error-message" class="error-message"></div>
+    </div>
+  </div>
+
+  <!-- Completion Screen -->
+  <div id="completion-screen" class="screen">
+    <div class="completion-container">
+      <h1>Session Complete</h1>
+      <p>Thank you for completing your Q&A session.</p>
+      <div class="session-summary" >
+        <p>Questions answered: <span id="questions-count">0</span></p>
+        <p>Session duration: <span id="session-duration">0:00</span></p>
+        <br>
+        <p id="summary-report"></p>
+      </div>
+      <button id="new-session-button" class="control-button">Start New Session</button>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/timer.js"></script>
+  <script src="js/speech.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/session.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

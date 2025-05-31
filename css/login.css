@@ -1,0 +1,99 @@
+/* Login screen styles */
+#login-screen {
+  justify-content: center;
+  align-items: center;
+  background-color: var(--background-color);
+  background-image: linear-gradient(135deg, rgba(66, 133, 244, 0.1), rgba(52, 168, 83, 0.1));
+  padding: var(--spacing-md);
+}
+
+.login-container {
+  background-color: var(--surface-color);
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 420px;
+  padding: var(--spacing-xl);
+  text-align: center;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.login-container h1 {
+  color: var(--primary-color);
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin-bottom: var(--spacing-md);
+}
+
+.login-container .subtitle {
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-xl);
+  font-size: 1rem;
+}
+
+#login-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+#email-input {
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  padding: var(--spacing-md);
+  font-size: 1rem;
+  height: 56px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#email-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.2);
+}
+
+#email-input.error {
+  border-color: var(--error-color);
+}
+
+#login-button {
+  background-color: var(--primary-color);
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: var(--spacing-md);
+  height: 56px;
+  border-radius: 8px;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+#login-button:hover {
+  background-color: var(--primary-dark);
+}
+
+#login-button:active {
+  transform: scale(0.98);
+}
+
+/* Responsive design */
+@media (max-width: 480px) {
+  .login-container {
+    padding: var(--spacing-lg);
+    max-width: 100%;
+  }
+  
+  .login-container h1 {
+    font-size: 1.75rem;
+  }
+  
+  #email-input,
+  #login-button {
+    height: 50px;
+  }
+}
