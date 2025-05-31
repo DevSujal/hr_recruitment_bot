@@ -44,7 +44,7 @@ const Auth = {
     const btn = document.getElementById("login-button");
     btn.innerHTML = "please wait generating questions";
     btn.disabled = true;
-    const response = await fetch("http://localhost:3000/get-response", {
+    const response = await fetch("/get-response", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
