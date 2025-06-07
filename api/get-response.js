@@ -1,20 +1,5 @@
-import express from "express";
-import cors from "cors";
 import OpenAI from "openai";
-import "dotenv/config";
-import path from "path";
-import { fileURLToPath } from "url";
 
-const app = express();
-
-app.use(cors({ origin: "*" }));
-app.use(express.json());
-
-// Workaround to get __dirname in ES module
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-console.log(process.env.OPENAI_API_KEY)
 const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
@@ -44,15 +29,27 @@ const getResponseFromOpenAi = async (query) => {
   }
 };
 
-// Serve static files (like index.html, CSS, JS)
-app.use(express.static(path.join(__dirname, "public")));
+export default async function handler(req, res) {
+  // Enable CORS
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+  );
 
-// Optional: route to serve index.html explicitly
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
-});
+  // Handle preflight requests
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return;
+  }
 
-app.post("/get-response", async (req, res) => {
+  // Only allow POST requests
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
   try {
     const { query } = req.body;
     
@@ -71,10 +68,4 @@ app.post("/get-response", async (req, res) => {
     console.error("Error:", error);
     return res.status(500).json({ error: "Internal server error" });
   }
-});
-
-// Fixed port configuration - use || instead of |
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log("App is listening on port", PORT);
-});
+}

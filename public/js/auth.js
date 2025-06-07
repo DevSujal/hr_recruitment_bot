@@ -44,7 +44,7 @@ const Auth = {
     const btn = document.getElementById("login-button");
     btn.innerHTML = "please wait generating questions";
     btn.disabled = true;
-    const response = await fetch("/get-response", {
+    const response = await fetch("http://localhost:5000/generate-questions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -54,7 +54,8 @@ const Auth = {
       }),
     });
     const questions = await response.json();
-    CONFIG.questions = JSON.parse(questions.response);
+    console.log(questions);
+    CONFIG.questions = questions.questions
 
     // Initialize session with the validated email
     Session.initialize(email);

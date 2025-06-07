@@ -165,7 +165,7 @@ const Session = {
     reportElem.innerHTML = "Generating report...";
     const data = await JSON.parse(localStorage.getItem("voiceQA_session"));
     const { qa } = data;
-    const response = await fetch("/get-response", {
+    const response = await fetch("/api/get-response", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

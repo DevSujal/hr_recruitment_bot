@@ -1,18 +1,15 @@
 {
+  "name": "hr-bot-vercel",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "start": "node app.js",
-    "build": "echo 'No build step required'",
-    "dev": "nodemon app.js"
+    "build": "echo 'Build completed'"
   },
   "dependencies": {
-    "cors": "^2.8.5",
-    "dotenv": "^16.5.0",
-    "express": "^5.1.0",
     "openai": "^5.0.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.10"
+    "vercel": "^34.0.0"
   },
   "engines": {
     "node": ">=18.0.0"
